@@ -11,6 +11,7 @@ const Header = () => {
     });
   
     const json = await res.json();
+    
     if (json) {
       let username = sessionStorage.getItem('username');
       sessionStorage.removeItem('username');

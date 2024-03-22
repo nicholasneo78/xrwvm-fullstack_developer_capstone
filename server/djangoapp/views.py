@@ -1,12 +1,12 @@
 # Uncomment the required imports before adding the code
 
-# from django.shortcuts import render
-# from django.http import HttpResponseRedirect, HttpResponse
-# from django.contrib.auth.models import User
-# from django.shortcuts import get_object_or_404, render, redirect
-# from django.contrib.auth import logout
-# from django.contrib import messages
-# from datetime import datetime
+from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth import logout
+from django.contrib import messages
+from datetime import datetime
 
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
@@ -27,8 +27,8 @@ logger = logging.getLogger(__name__)
 def login_user(request):
     # Get username and password from request.POST dictionary
     data = json.loads(request.body)
-    username = data['userName']
-    password = data['password']
+    username = data.get('userName', '')
+    password = data.get('password', '')
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
     data = {"userName": username}
@@ -39,13 +39,27 @@ def login_user(request):
     return JsonResponse(data)
 
 # Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout_user(request):
+    logout(request)
+    data = {"userName": ""}
+    return JsonResponse(data)
 
 # Create a `registration` view to handle sign up request
-# @csrf_exempt
-# def registration(request):
-# ...
+@csrf_exempt
+def register(request):
+    data = json.loads(request.body)
+    username = data.get('userName', '')
+    password = data.get('password', '')
+    first_name = data.get('firstName', '')
+    last_name = data.get('lastName', '')
+    email = data.get('email', '')
+
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({"error": "Username already exists"}, status=400)
+    else:
+        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        login(request, user)
+        return JsonResponse({"userName": username, "status": "Authenticated"})
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
