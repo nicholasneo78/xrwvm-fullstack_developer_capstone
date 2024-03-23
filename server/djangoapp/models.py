@@ -12,7 +12,6 @@ class CarMake(models.Model):
     founded_year = models.PositiveIntegerField()
     headquarters = models.CharField(max_length=200)
     website = models.URLField()
-    # Add other fields as needed
 
     def __str__(self):
         return self.name  # Return the name as the string representation
