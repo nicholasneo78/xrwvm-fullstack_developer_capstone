@@ -83,12 +83,12 @@ def register(request):
 # a list of dealerships
 # def get_dealerships(request):
 # ...
-# Update the `get_dealerships` render list of dealerships all by default, 
+# Update the `get_dealerships` render list of dealerships all by default,
 # particular state if state is passed
 
 
 def get_dealerships(request, state="All"):
-    if(state == "All"):
+    if state == "All":
         endpoint = "/fetchDealers"
     else:
         endpoint = "/fetchDealers/" + state
@@ -135,13 +135,13 @@ def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            _ = post_review(data)
             return JsonResponse({"status": 200})
-        except:
+        except Exception as e:
             return JsonResponse(
                 {"status": 401, "message": "Error in posting review"}
             )
     else:
         return JsonResponse(
-            {"status":403,"message":"Unauthorized"}
+            {"status": 403, "message": "Unauthorized"}
         )

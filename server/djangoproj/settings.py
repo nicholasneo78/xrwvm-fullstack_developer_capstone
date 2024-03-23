@@ -29,12 +29,12 @@ SECRET_KEY =\
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'localhost', 
-    'https://nneo003-8000.theiadockernext-' + \
+    'localhost',
+    'https://nneo003-8000.theiadockernext-' +
     '1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://nneo003-8000.theiadockernext-' + \
+    'https://nneo003-8000.theiadockernext-' +
     '1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 
@@ -101,7 +101,7 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.' + \
+        'django.contrib.auth.password_validation.' +
         'UserAttributeSimilarityValidator',
     },
     {
@@ -151,4 +151,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build'),
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
-
